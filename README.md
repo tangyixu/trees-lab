@@ -1,8 +1,7 @@
 # CSC 207: Trees Lab
 
-Author: _(TODO: insert your name here!)_
+Author: Annie Li, Tiffany Tang
 
 ## Resources
 
-*   _(TODO: list your resources here!)_
-*   ...
+*  https://osera.cs.grinnell.edu/ttap/data-structures-labs/trees.html

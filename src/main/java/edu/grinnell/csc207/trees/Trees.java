@@ -18,7 +18,6 @@ public class Trees {
         tree.insert(7);
         tree.insert(2);
         tree.insert(6);
-        System.out.println(tree.contains(0));
 
     }
 }

@@ -184,8 +184,23 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
     ///// Part 4: Deletion
 
     /*
-     * The three cases of deletion are: 1. (TODO: fill me in!) 2. (TODO: fill me in!) 3. (TOOD: fill
-     * me in!)
+     * The three cases of deletion are: 
+     1. A node that has no left or right 
+     1                      1
+        2           ->          2
+            3    
+     2. A node that has left or right
+     1                      1
+        2           ->          3
+            3                 4     5
+          4    5   
+     3. A node that has both left or right
+     1                      1
+        2           ->          2
+            3                 4     5
+          4    5   
+
+     * 
      */
 
     /**
@@ -194,6 +209,44 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
      * @param value the value to delete
      */
     public void delete(T value) {
-        throw new UnsupportedOperationException();
+        deleteh(value, root);      
     }
+
+    public Node<T> deleteh(T value, Node<T> cur){
+        if (cur == null) {
+            return null;
+        }
+
+        if (value.compareTo(cur.value) < 0) {
+            cur.left = deleteh(value, cur.left);
+        } else if (value.compareTo(cur.value) > 0) {
+            cur.right = deleteh(value, cur.right);
+        } else {
+            if (cur.left == null && cur.right == null) {
+                return null;
+            } else if (cur.left == null) {
+                return cur.right;
+            } else if (cur.right == null) {
+                return cur.left;
+            } else {
+                cur.value = max();
+                cur.left = deleteh(cur.value, cur.left);
+            }
+        }
+        return cur;
+    }
+
+    public T max(){
+        Node<T> cur = root;
+        if (cur == null) {
+            return null;
+        }
+        while (cur.right != null) {
+            cur = cur.right;
+        }
+        return cur.value;
+    }
+
+
+
 }

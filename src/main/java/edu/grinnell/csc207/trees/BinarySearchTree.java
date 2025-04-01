@@ -14,6 +14,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
      * A node of the binary search tree.
      */
     private static class Node<T> {
+
         T value;
         Node<T> left;
         Node<T> right;
@@ -42,7 +43,8 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
     /**
      * Constructs a new empty binary search tree.
      */
-    public BinarySearchTree() {}
+    public BinarySearchTree() {
+    }
 
     private int sizeH(Node<T> node) {
         if (node == null) {
@@ -140,35 +142,28 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
 
     ///// Part 2: Contains
 
-    /**
-     * @param value the value to search for
-     * @return true iff the tree contains <code>value</code>
-     */
-    public boolean contains(T value) {
-        boolean result = containsh(root, value);
-        System.out.println(result);
-        return result;
+/**
+ * @param value the value to search for
+ * @return true if the tree contains the value
+ */
+public boolean contains(T value) {
+        return containsH(root, value);
     }
 
-    public boolean containsh(Node<T> cur, T value) {
-        System.out.println("cur" + cur.value);
-        System.out.println("if" + value.compareTo(cur.value));
+    private boolean containsH(Node<T> cur, T value) {
         if (cur == null) {
             return false;
         }
-        if (value.compareTo(cur.value) == 0) {
-            System.out.println("return true");
+
+        int cmp = value.compareTo(cur.value);
+
+        if (cmp == 0) {
             return true;
+        } else if (cmp < 0) {
+            return containsH(cur.left, value);
         } else {
-            if (cur.left != null) {
-                if (!containsh(cur.left, value))
-            }
-            if (cur.right != null) {
-                return containsh(cur.right, value);
-            }
-
+            return containsH(cur.right, value);
         }
-
     }
 
     ///// Part 3: Pretty Printing
@@ -178,29 +173,39 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
      *         "[v0, v1, ..., vn]"
      */
     public String toStringPreorder() {
-        throw new UnsupportedOperationException();
+        StringBuffer buf = new StringBuffer("[");
+        List<T> result = this.toListPreorder();
+        if (!result.isEmpty()) {
+            buf.append(result.get(0));
+            for (int i = 1; i < result.size(); i++) {
+                buf.append(", ");
+                buf.append(result.get(i));
+            }
+        }
+        buf.append("]");
+        return buf.toString();
     }
 
     ///// Part 4: Deletion
 
     /*
-     * The three cases of deletion are: 
-     1. A node that has no left or right 
+     * The three cases of deletion are:
+     1. A node that has no left or right
      1                      1
         2           ->          2
-            3    
+            3
      2. A node that has left or right
      1                      1
         2           ->          3
             3                 4     5
-          4    5   
+          4    5
      3. A node that has both left or right
      1                      1
         2           ->          2
             3                 4     5
-          4    5   
+          4    5
 
-     * 
+     *
      */
 
     /**
@@ -209,10 +214,10 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
      * @param value the value to delete
      */
     public void delete(T value) {
-        deleteh(value, root);      
+        deleteh(value, root);
     }
 
-    public Node<T> deleteh(T value, Node<T> cur){
+    public Node<T> deleteh(T value, Node<T> cur) {
         if (cur == null) {
             return null;
         }
@@ -236,7 +241,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
         return cur;
     }
 
-    public T max(){
+    public T max() {
         Node<T> cur = root;
         if (cur == null) {
             return null;
@@ -246,7 +251,5 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
         }
         return cur.value;
     }
-
-
 
 }
